@@ -5,7 +5,7 @@ public class Offre {
 	private String dateD;
 	private String dateF;
 	private String offre;
-	private int fid;
+	private int rid;
 	
 	
 	public Offre() {
@@ -18,7 +18,7 @@ public class Offre {
 		this.dateD = dateD;
 		this.dateF = dateF;
 		this.offre = offre;
-		this.fid = fid;
+		this.rid = fid;
 	}
 
 	public int getId() {
@@ -54,16 +54,16 @@ public class Offre {
 	}
 
 	public int getFid() {
-		return fid;
+		return rid;
 	}
 
 	public void setFid(int fid) {
-		this.fid = fid;
+		this.rid = fid;
 	}
 
 	@Override
 	public String toString() {
-		return "Offre [id=" + id + ", dateD=" + dateD + ", dateF=" + dateF + ", offre=" + offre + ", fid=" + fid + "]";
+		return "Offre [id=" + id + ", dateD=" + dateD + ", dateF=" + dateF + ", offre=" + offre + ", fid=" + rid + "]";
 	}
 
 }

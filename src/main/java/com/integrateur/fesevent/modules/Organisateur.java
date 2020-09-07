@@ -1,34 +1,26 @@
 package com.integrateur.fesevent.modules;
 
-import java.io.Serializable;
+import java.util.Vector;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+public class Organisateur {
 
-@Entity
-public class Client implements Serializable {
-
-	private static final long serialVersionUID = 3190822104020803703L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 	private String nom;
 	private String prenom;
 	private String email;
+	private Vector<Event> events;
 	
-	
-	public Client() {
+	public Organisateur() {
+		events = new Vector<>();
 	}
 
-	public Client(int id, String nom, String prenom, String email) {
+	public Organisateur(int id, String nom, String prenom, String email, Vector<Event> events) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
+		this.events = new Vector<>();
 	}
 
 	public int getId() {
@@ -62,10 +54,7 @@ public class Client implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	@Override
-	public String toString() {
-		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + "]";
-	}
 	
+	
+
 }

@@ -1,33 +1,31 @@
 package com.integrateur.fesevent.modules;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Client implements Serializable {
-
-	private static final long serialVersionUID = 3190822104020803703L;
+public class Manager {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 	private String nom;
 	private String prenom;
+	private String tel;
 	private String email;
 	
-	
-	public Client() {
+	public Manager() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public Client(int id, String nom, String prenom, String email) {
+	public Manager(int id, String nom, String prenom, String tel, String email) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.tel = tel;
 		this.email = email;
 	}
 
@@ -55,6 +53,14 @@ public class Client implements Serializable {
 		this.prenom = prenom;
 	}
 
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -62,10 +68,7 @@ public class Client implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	@Override
-	public String toString() {
-		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + "]";
-	}
 	
+	
+
 }

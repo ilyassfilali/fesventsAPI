@@ -1,5 +1,10 @@
 package com.integrateur.fesevent.modules;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+
 public class Coupon extends Offre {
 	
 	private int id;
