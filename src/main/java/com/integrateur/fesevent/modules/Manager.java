@@ -10,7 +10,7 @@ public class Manager {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String nom;
 	private String prenom;
 	private String tel;

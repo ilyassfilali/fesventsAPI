@@ -7,8 +7,8 @@ import javax.persistence.InheritanceType;
 
 public class Coupon extends Offre {
 	
-	private int id;
-	private int code;
+	private Integer id;
+	private Integer code;
 	
 	public Coupon() {
 		super();

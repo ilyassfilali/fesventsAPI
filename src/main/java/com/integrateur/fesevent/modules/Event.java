@@ -1,21 +1,27 @@
 package com.integrateur.fesevent.modules;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Event {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Integer id;
 	private String dateD;
 	private String dateF;
 	private String description;
 	private String tel;
 	private String adress;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "organisateur_id",nullable = false)
+	private Organisateur organisateur;
 	
 	public Event() {
 	}
@@ -29,13 +35,8 @@ public class Event {
 		this.tel = tel;
 		this.adress = adress;
 	}
-
-	public int getId() {
+	public Integer getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getDateD() {
@@ -77,5 +78,18 @@ public class Event {
 	public void setAdress(String adress) {
 		this.adress = adress;
 	}
+
+	public Organisateur getOrganisateur() {
+		return organisateur;
+	}
+
+	public void setOrganisateur(Organisateur organisateur) {
+		this.organisateur = organisateur;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	
 }
