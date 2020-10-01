@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.sun.istack.NotNull;
+
 @Entity
 public class Client implements Serializable {
 
@@ -16,9 +18,15 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotNull
 	private String nom;
+	@NotNull
 	private String prenom;
+	@NotNull
+	private String passwd;
+	@NotNull
 	private String email;
+	
 	
 	
 	public Client() {

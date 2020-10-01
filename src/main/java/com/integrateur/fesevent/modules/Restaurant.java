@@ -1,9 +1,14 @@
 package com.integrateur.fesevent.modules;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Restaurant {
@@ -11,11 +16,11 @@ public class Restaurant {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String nomPro;
 	private String nomRes;
 	private String tel;
 	private String spesialite;
-	private String adress;
+	@OneToMany( mappedBy = "restaurant" , cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<RestaurantAdress> adress = new ArrayList<>();
 	private String email;
 	private String imgPath;
 	
@@ -23,10 +28,9 @@ public class Restaurant {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Restaurant(int id, String nomPro, String nomRes, String tel, String adress, String email) {
+	public Restaurant(int id, String nomRes, String tel, List<RestaurantAdress> adress, String email) {
 		super();
 		this.id = id;
-		this.nomPro = nomPro;
 		this.nomRes = nomRes;
 		this.tel = tel;
 		this.adress = adress;
@@ -39,14 +43,6 @@ public class Restaurant {
 	
 	public void setId(int id) {
 		this.id = id;
-	}
-	
-	public String getNomPro() {
-		return nomPro;
-	}
-	
-	public void setNomPro(String nomPro) {
-		this.nomPro = nomPro;
 	}
 	
 	public String getNomRes() {
@@ -73,11 +69,11 @@ public class Restaurant {
 		this.spesialite = spesialite;
 	}
 
-	public String getAdress() {
+	public List<RestaurantAdress> getAdress() {
 		return adress;
 	}
 	
-	public void setAdress(String adress) {
+	public void setAdress(List<RestaurantAdress> adress) {
 		this.adress = adress;
 	}
 	public String getEmail() {
@@ -86,6 +82,14 @@ public class Restaurant {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
 	}
 
 }

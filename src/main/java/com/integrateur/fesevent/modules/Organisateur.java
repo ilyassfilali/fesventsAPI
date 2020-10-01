@@ -19,7 +19,7 @@ public class Organisateur {
 	private String nom;
 	private String prenom;
 	private String email;
-	@OneToMany(mappedBy = "organisateur" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "organisateur" , fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Event> events;
 	
 	public Organisateur() {
@@ -65,6 +65,14 @@ public class Organisateur {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
 	}
 	
 	
