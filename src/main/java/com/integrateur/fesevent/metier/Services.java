@@ -16,33 +16,16 @@ import com.integrateur.fesevent.modules.Restaurant;
 public class Services {
 	
 	@Autowired
-	private ClientRep clientRep;
-	@Autowired
 	private RestauRep restauRep;
 	
-	private Vector<Restaurant> res;
 	
 	public Services() {
-		res = new Vector<>();
 	}
 	
 	public Services(RestauRep restaurantdao) {
 		super();
 	}
 
-	public List<Client> getallclients(){
-		List<Client> clients = new ArrayList<Client>();
-		clientRep.findAll().forEach(clients::add);
-		return clients;
-	}
-	
-	public void addClient(Client c) {
-		clientRep.save(c);
-	}
-
-	/*
-	 * 
-	 */
 	
 	public List<Restaurant> getallRestaurants(){
 		List<Restaurant> restaurants = new ArrayList<Restaurant>();
@@ -50,4 +33,8 @@ public class Services {
 		return restaurants;
 	}
 	
+	
+	public void addRestaurant(Restaurant res) {
+		restauRep.save(res);
+	}
 }

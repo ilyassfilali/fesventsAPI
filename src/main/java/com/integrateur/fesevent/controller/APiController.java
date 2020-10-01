@@ -15,24 +15,18 @@ import com.integrateur.fesevent.modules.Client;
 import com.integrateur.fesevent.modules.Restaurant;
 
 @RestController
-@RequestMapping(value = "/api/")
+@RequestMapping(value = "/apifesevents/resources/")
 public class APiController {
 	@Autowired
-	private Services service;
+	private Services service;	
 	
-	@RequestMapping(value = "clients", method = RequestMethod.GET)
+	@RequestMapping(value = "/restaurant", method = RequestMethod.POST)
 	@ResponseBody
-	public List<Client> clients(){
-		return service.getallclients();
+	public void setrestaurant(@RequestBody Restaurant restaurant){
+		service.addRestaurant(restaurant);
 	}
 	
 	
-	@RequestMapping(value = "restaurant/{name}", method = RequestMethod.GET)
-	@ResponseBody
-	public List<Restaurant> allrestaurant(@PathVariable String name){
-		//return service.getrestaubyName(name);
-		return null;
-	}
 	@RequestMapping(value="/restaurants", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Restaurant> restaurants(){
