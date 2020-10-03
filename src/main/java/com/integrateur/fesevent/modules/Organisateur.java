@@ -19,8 +19,10 @@ public class Organisateur {
 	private String nom;
 	private String prenom;
 	private String email;
+	private String passwd;
 	@OneToMany(mappedBy = "organisateur" , fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Event> events;
+	private boolean verify;
 	
 	public Organisateur() {
 		events = new Vector<>();
@@ -67,12 +69,34 @@ public class Organisateur {
 		this.email = email;
 	}
 
+	public String getPasswd() {
+		return passwd;
+	}
+
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+
 	public List<Event> getEvents() {
 		return events;
 	}
 
 	public void setEvents(List<Event> events) {
 		this.events = events;
+	}
+
+	/**
+	 * @return the verify
+	 */
+	public boolean isVerify() {
+		return verify;
+	}
+
+	/**
+	 * @param verify the verify to set
+	 */
+	public void setVerify(boolean verify) {
+		this.verify = verify;
 	}
 	
 	

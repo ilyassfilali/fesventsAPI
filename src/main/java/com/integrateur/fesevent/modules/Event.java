@@ -79,8 +79,8 @@ public class Event {
 		this.adress = adress;
 	}
 
-	public Organisateur getOrganisateur() {
-		return organisateur;
+	public int getOrganisateur() {
+		return organisateur.getId();
 	}
 
 	public void setOrganisateur(Organisateur organisateur) {
@@ -90,6 +90,5 @@ public class Event {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
 	
 }
