@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.integrateur.fesevent.metier.Services;
-import com.integrateur.fesevent.modules.Client;
 import com.integrateur.fesevent.modules.Restaurant;
 
 @RestController
-@RequestMapping(value = "/apifesevents/resources/")
+@RequestMapping(value = "/api/")
 public class APiController {
 	@Autowired
 	private Services service;	

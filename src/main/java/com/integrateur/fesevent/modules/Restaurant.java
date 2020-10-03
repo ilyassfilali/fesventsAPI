@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +25,8 @@ public class Restaurant {
 	private List<RestaurantAdress> adress = new ArrayList<>();
 	private String email;
 	private String imgPath;
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "restaurant")
+	private PropRestaurant propRestaurant;
 	
 	public Restaurant() {
 		// TODO Auto-generated constructor stub
@@ -91,6 +94,14 @@ public class Restaurant {
 
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
+	}
+
+	public PropRestaurant getPropRestaurant() {
+		return propRestaurant;
+	}
+
+	public void setPropRestaurant(PropRestaurant propRestaurant) {
+		this.propRestaurant = propRestaurant;
 	}
 
 }

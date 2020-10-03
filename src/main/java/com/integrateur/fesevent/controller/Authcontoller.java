@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.integrateur.fesevent.dto.AuthResponseToken;
+import com.integrateur.fesevent.dto.LoginRequest;
 import com.integrateur.fesevent.metier.AuthService;
 import com.integrateur.fesevent.modules.Organisateur;
 import com.integrateur.fesevent.modules.PropRestaurant;
@@ -37,15 +39,25 @@ public class Authcontoller {
 		return new ResponseEntity<>("good",HttpStatus.OK);
 	}
 	
-	@GetMapping("ResaccountVerification/{token}")
+	@GetMapping("/ResaccountVerification/{token}")
 	public ResponseEntity<String> verifyres(@PathVariable String token){
 		authService.verificationRes(token);
 		return new ResponseEntity<>("account activated Successfully",HttpStatus.OK);
 	}
 	
-	@GetMapping("OrgaccountVerification/{token}")
+	@GetMapping("/OrgaccountVerification/{token}")
 	public ResponseEntity<String> verifyorg(@PathVariable String token){
-		authService.verificationRes(token);
+		authService.verificationOrg(token);
 		return new ResponseEntity<>("account activated Successfully",HttpStatus.OK);
+	}
+	
+	@PostMapping("/loginRes")
+	public AuthResponseToken resLogin(@RequestBody LoginRequest request){
+		return authService.login(request);
+	}
+	
+	@PostMapping("/loginOrg")
+	public AuthResponseToken OrgLogin(@RequestBody LoginRequest request){
+		return authService.login(request);
 	}
 }

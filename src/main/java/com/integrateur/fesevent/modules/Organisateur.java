@@ -28,12 +28,12 @@ public class Organisateur {
 		events = new Vector<>();
 	}
 
-	public Organisateur(int id, String nom, String prenom, String email, Vector<Event> events) {
+	public Organisateur(String nom, String prenom, String email,String pass) {
 		super();
-		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
+		this.passwd = pass;
 		this.events = new Vector<>();
 	}
 

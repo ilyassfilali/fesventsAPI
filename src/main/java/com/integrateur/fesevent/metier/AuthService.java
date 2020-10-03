@@ -4,6 +4,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,11 +16,14 @@ import com.integrateur.fesevent.dao.OrganisateurRep;
 import com.integrateur.fesevent.dao.ProRestaurRep;
 import com.integrateur.fesevent.dao.VerificationOrgRep;
 import com.integrateur.fesevent.dao.VerificationPropRep;
+import com.integrateur.fesevent.dto.AuthResponseToken;
+import com.integrateur.fesevent.dto.LoginRequest;
 import com.integrateur.fesevent.modules.Notification;
 import com.integrateur.fesevent.modules.Organisateur;
 import com.integrateur.fesevent.modules.PropRestaurant;
 import com.integrateur.fesevent.modules.VerificationTokenOrg;
 import com.integrateur.fesevent.modules.VerificationTokenPropR;
+import com.integrateur.fesevent.security.JwtProvider;
 
 @Service
 public class AuthService {
@@ -33,6 +40,10 @@ public class AuthService {
 	private VerificationOrgRep verificationOrgRep;
 	@Autowired
 	private MailService mailService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	@Autowired
+	private JwtProvider jwtProvider;
 	
 	
 	//PropRestau signup
@@ -119,5 +130,13 @@ public class AuthService {
 		Organisateur organisateur = organisateurRep.findById(id).orElseThrow(() -> new SpringRedditException("account not found"));
 		organisateur.setVerify(true);
 		organisateurRep.save(organisateur);
+	}
+
+	//login
+	
+	public AuthResponseToken login(LoginRequest request) {
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPasswd()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		return new AuthResponseToken(jwtProvider.generateToken(authentication), request.getEmail());
 	}
 }
