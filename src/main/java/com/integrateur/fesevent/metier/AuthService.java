@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -139,4 +140,18 @@ public class AuthService {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		return new AuthResponseToken(jwtProvider.generateToken(authentication), request.getEmail());
 	}
+
+	 public PropRestaurant getCurrentres() {
+	        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+	                getContext().getAuthentication().getPrincipal();
+	        return proRestaurRep.findByEmail(principal.getUsername())
+	                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+	 }
+	 
+	 public Organisateur getCurrentorg() {
+		 org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
+	                getContext().getAuthentication().getPrincipal();
+		 return organisateurRep.findByEmail(principal.getUsername())
+	                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+	 }
 }
