@@ -22,6 +22,9 @@ import com.integrateur.fesevent.Exception.SpringRedditException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
+import static io.jsonwebtoken.Jwts.parser;
+import static java.util.Date.from;
+
 @Service
 public class JwtProvider {
 
@@ -52,7 +55,7 @@ public class JwtProvider {
 	}
 	
 	public boolean validateToken(String token) {
-		Jwts.parser().setSigningKey(getpublickey()).parseClaimsJwt(token);
+		parser().setSigningKey(getpublickey()).parseClaimsJws(token);
 		return true;
 	}
 

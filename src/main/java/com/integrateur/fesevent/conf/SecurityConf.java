@@ -19,11 +19,11 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService detailsService;
+	@Autowired
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
 	
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception {
-		jwtAuthenticationFilter = new JwtAuthenticationFilter();
 		httpSecurity.csrf().disable().authorizeRequests().antMatchers("/api/**").permitAll().anyRequest().authenticated();
 		httpSecurity.addFilterBefore(jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class);

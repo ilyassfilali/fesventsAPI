@@ -13,10 +13,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	@Autowired
@@ -30,7 +31,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		String jwt = getJwtfromRequest(request);
 		if (StringUtils.hasText(jwt) && provider.validateToken(jwt)) {
             String username = provider.getUsernameFromJwt(jwt);
-
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
                     null, userDetails.getAuthorities());
@@ -47,7 +47,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return bearerToken.substring(7);
         }
         return bearerToken;
-		
 	}
 
 }
