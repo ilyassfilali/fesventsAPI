@@ -96,8 +96,8 @@ public class Restaurant {
 		this.imgPath = imgPath;
 	}
 
-	public PropRestaurant getPropRestaurant() {
-		return propRestaurant;
+	public int getPropRestaurant() {
+		return propRestaurant.getId();
 	}
 
 	public void setPropRestaurant(PropRestaurant propRestaurant) {
