@@ -3,6 +3,7 @@ package com.integrateur.fesevent.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.integrateur.fesevent.dto.AuthResponseToken;
 import com.integrateur.fesevent.dto.LoginRequest;
+import com.integrateur.fesevent.dto.RefreshTokenReq;
 import com.integrateur.fesevent.metier.AuthService;
+import com.integrateur.fesevent.metier.RefreshtokenServices;
 import com.integrateur.fesevent.modules.Organisateur;
 import com.integrateur.fesevent.modules.PropRestaurant;
 
@@ -22,6 +25,8 @@ public class Authcontoller {
 
 	@Autowired
 	private AuthService authService;
+	@Autowired
+	private RefreshtokenServices refreshtokenServices;
 	
 	public Authcontoller() {
 		// TODO Auto-generated constructor stub
@@ -51,13 +56,19 @@ public class Authcontoller {
 		return new ResponseEntity<>("account activated Successfully",HttpStatus.OK);
 	}
 	
-	@PostMapping("/loginRes")
+	@PostMapping("/login")
 	public AuthResponseToken resLogin(@RequestBody LoginRequest request){
 		return authService.login(request);
 	}
 	
-	@PostMapping("/loginOrg")
-	public AuthResponseToken OrgLogin(@RequestBody LoginRequest request){
-		return authService.login(request);
+	@PostMapping("/refreshToken")
+	public AuthResponseToken refresh(@RequestBody RefreshTokenReq ref) {
+		return authService.refreshtoken(ref);
+	}
+	
+	@PostMapping("/logout")
+	public ResponseEntity<String> Logout(@RequestBody RefreshTokenReq ref){
+		refreshtokenServices.deleteRefreshToken(ref.getRefreshtoken());
+		return new ResponseEntity<>("reftoken deleted!",HttpStatus.OK);
 	}
 }

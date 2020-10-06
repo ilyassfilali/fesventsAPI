@@ -1,5 +1,6 @@
 package com.integrateur.fesevent.metier;
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ import com.integrateur.fesevent.dao.VerificationOrgRep;
 import com.integrateur.fesevent.dao.VerificationPropRep;
 import com.integrateur.fesevent.dto.AuthResponseToken;
 import com.integrateur.fesevent.dto.LoginRequest;
+import com.integrateur.fesevent.dto.RefreshTokenReq;
 import com.integrateur.fesevent.modules.Notification;
 import com.integrateur.fesevent.modules.Organisateur;
 import com.integrateur.fesevent.modules.PropRestaurant;
@@ -45,10 +47,12 @@ public class AuthService {
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private JwtProvider jwtProvider;
-	
+	@Autowired
+	private RefreshtokenServices refreshtokenServices;
 	
 	//PropRestau signup
 	
+
 	public void ResSignup(PropRestaurant propRestaurant) {
 		String passwd = propRestaurant.getPasswd();
 		propRestaurant.setPasswd(passEncoder.encode(passwd));
@@ -138,7 +142,7 @@ public class AuthService {
 	public AuthResponseToken login(LoginRequest request) {
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPasswd()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		return new AuthResponseToken(jwtProvider.generateToken(authentication), request.getEmail());
+		return new AuthResponseToken(jwtProvider.generateToken(authentication),refreshtokenServices.generateRefreshToken().getToken(),Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis())+"", request.getEmail());
 	}
 
 	 public PropRestaurant getCurrentres() {
@@ -154,4 +158,12 @@ public class AuthService {
 		 return organisateurRep.findByEmail(principal.getUsername())
 	                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
 	 }
+
+	 
+	 public AuthResponseToken refreshtoken(RefreshTokenReq ref) {
+		 refreshtokenServices.validateRefreshToken(ref.getRefreshtoken());
+		 String token = jwtProvider.generateTokenwithusername(ref.getEmail());
+		 return new AuthResponseToken(token,ref.getRefreshtoken(),Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis())+"", ref.getEmail());
+	 }
+
 }
