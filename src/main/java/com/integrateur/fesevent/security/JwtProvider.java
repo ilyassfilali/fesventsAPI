@@ -50,7 +50,7 @@ public class JwtProvider {
 		return Jwts.builder().setSubject(user.getUsername()).signWith(getprivatekey()).setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis))).compact();
 	}
 	
-	public String generateTokenwithusername(String name) {
+	public String generateTokenWithUsername(String name) {
 		return Jwts.builder().setSubject(name).signWith(getprivatekey()).setExpiration(Date.from(Instant.now().plusMillis(jwtExpirationInMillis))).compact();
 	}
 
@@ -71,17 +71,12 @@ public class JwtProvider {
 		try {
             return keyStore.getCertificate("springblog").getPublicKey();
         } catch (KeyStoreException e) {
-            throw new SpringRedditException("Exception occured while " +
-                    "retrieving public key from keystore", e);
+            throw new SpringRedditException("Exception occured while retrieving public key from keystore", e);
         }
 	}
 
 	public String getUsernameFromJwt(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(getpublickey())
-                .parseClaimsJws(token)
-                .getBody();
-
+        Claims claims = Jwts.parser().setSigningKey(getpublickey()).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
 	

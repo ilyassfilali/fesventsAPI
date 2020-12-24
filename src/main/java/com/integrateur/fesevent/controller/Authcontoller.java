@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.integrateur.fesevent.dto.AuthResponseToken;
 import com.integrateur.fesevent.dto.LoginRequest;
 import com.integrateur.fesevent.dto.RefreshTokenReq;
+import com.integrateur.fesevent.dto.SignupReq;
 import com.integrateur.fesevent.metier.AuthService;
 import com.integrateur.fesevent.metier.RefreshtokenServices;
 import com.integrateur.fesevent.modules.Organisateur;
@@ -33,8 +34,8 @@ public class Authcontoller {
 	}
 
 	@PostMapping("/signupRes")
-	public ResponseEntity<String> signupR(@RequestBody PropRestaurant propRestaurant){
-		authService.ResSignup(propRestaurant);
+	public ResponseEntity<String> signupR(@RequestBody SignupReq req){
+		authService.ResSignup(req);
 		return new ResponseEntity<>("good",HttpStatus.OK);
 	}
 	

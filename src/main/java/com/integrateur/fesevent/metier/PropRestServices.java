@@ -1,6 +1,7 @@
 package com.integrateur.fesevent.metier;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.integrateur.fesevent.dao.ProRestaurRep;
@@ -19,8 +20,8 @@ public class PropRestServices {
 	@Autowired
 	private AuthService authService;
 	
-	public void modifyRestaurant(Restaurant restaurant) {
-		PropRestaurant propRestaurant = authService.getCurrentres();
+	public void modifyRestaurant(String email, Restaurant restaurant) {
+		PropRestaurant propRestaurant = proRestaurRep.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User name not found"));;
 		Restaurant r = propRestaurant.getRestaurant();
 		r.setEmail(restaurant.getEmail());
 		r.setNomRes(restaurant.getNomRes());
@@ -30,15 +31,15 @@ public class PropRestServices {
 		restauRep.save(r);
 	}
 	
-	public void addAdress(RestaurantAdress adress) {
-		PropRestaurant propRestaurant = authService.getCurrentres();
+	public void addAdress(String email, RestaurantAdress adress) {
+		PropRestaurant propRestaurant = proRestaurRep.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User name not found"));;
 		Restaurant r = propRestaurant.getRestaurant();
 		adress.setRestaurant(r);
 		r.getAdress().add(adress);
 		restauRep.save(r);
 	}
 
-	public Restaurant getRestaurant() {
-		return authService.getCurrentres().getRestaurant();
+	public Restaurant getRestaurant(String email) {
+		return proRestaurRep.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User name not found")).getRestaurant();
 	}
 }

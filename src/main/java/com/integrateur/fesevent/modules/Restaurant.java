@@ -32,6 +32,10 @@ public class Restaurant {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Restaurant(String name) {
+		super();
+		this.nomRes=name;
+	}
 	public Restaurant(int id, String nomRes, String tel, List<RestaurantAdress> adress, String email) {
 		super();
 		this.id = id;

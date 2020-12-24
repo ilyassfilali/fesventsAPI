@@ -21,9 +21,11 @@ import com.integrateur.fesevent.dao.VerificationPropRep;
 import com.integrateur.fesevent.dto.AuthResponseToken;
 import com.integrateur.fesevent.dto.LoginRequest;
 import com.integrateur.fesevent.dto.RefreshTokenReq;
+import com.integrateur.fesevent.dto.SignupReq;
 import com.integrateur.fesevent.modules.Notification;
 import com.integrateur.fesevent.modules.Organisateur;
 import com.integrateur.fesevent.modules.PropRestaurant;
+import com.integrateur.fesevent.modules.Restaurant;
 import com.integrateur.fesevent.modules.VerificationTokenOrg;
 import com.integrateur.fesevent.modules.VerificationTokenPropR;
 import com.integrateur.fesevent.security.JwtProvider;
@@ -53,10 +55,14 @@ public class AuthService {
 	//PropRestau signup
 	
 
-	public void ResSignup(PropRestaurant propRestaurant) {
-		String passwd = propRestaurant.getPasswd();
-		propRestaurant.setPasswd(passEncoder.encode(passwd));
+	public void ResSignup(SignupReq req) {
+		PropRestaurant propRestaurant = new PropRestaurant();
+		propRestaurant.setEmail(req.getEmail());
+		propRestaurant.setName(req.getNom());
+		propRestaurant.setPrenom(req.getPrenom());
+		propRestaurant.setPasswd(passEncoder.encode(req.getPasswd()));
 		propRestaurant.setVerify(false);
+		propRestaurant.setRestaurant(new Restaurant(req.getNomres()));
 		proRestaurRep.save(propRestaurant);
 		String token = generateTokenRep(propRestaurant);
 		Notification n = new Notification();
@@ -146,6 +152,7 @@ public class AuthService {
 	}
 
 	 public PropRestaurant getCurrentres() {
+		 System.out.println("aezr");
 	        org.springframework.security.core.userdetails.User principal = (org.springframework.security.core.userdetails.User) SecurityContextHolder.
 	                getContext().getAuthentication().getPrincipal();
 	        return proRestaurRep.findByEmail(principal.getUsername())
@@ -162,7 +169,7 @@ public class AuthService {
 	 
 	 public AuthResponseToken refreshtoken(RefreshTokenReq ref) {
 		 refreshtokenServices.validateRefreshToken(ref.getRefreshtoken());
-		 String token = jwtProvider.generateTokenwithusername(ref.getEmail());
+		 String token = jwtProvider.generateTokenWithUsername(ref.getEmail());
 		 return new AuthResponseToken(token,ref.getRefreshtoken(),Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis())+"", ref.getEmail());
 	 }
 

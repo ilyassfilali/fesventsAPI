@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,19 +23,19 @@ public class PropRestController {
 	private PropRestServices propRestServices;
 
 	
-	@GetMapping("restauinfo")
-	public ResponseEntity<Restaurant> getinfo(@RequestBody PropRestaurant propRestaurant) {
-		return ResponseEntity.status(HttpStatus.OK).body(propRestServices.getRestaurant());
+	@GetMapping("restauinfo/{email}")
+	public ResponseEntity<Restaurant> getinfo(@PathVariable String email,@RequestBody PropRestaurant propRestaurant) {
+		return ResponseEntity.status(HttpStatus.OK).body(propRestServices.getRestaurant(email));
 	}
 	
-	@PostMapping("restrauUpdate")
-	public void setRestaurant(@RequestBody Restaurant restaurant) {
-		propRestServices.modifyRestaurant(restaurant);
+	@PostMapping("restrauUpdate/{email}")
+	public void setRestaurant(@PathVariable String email,@RequestBody Restaurant restaurant) {
+		propRestServices.modifyRestaurant(email, restaurant);
 	}
 	
-	@PostMapping("newadress")
-	public void addadress(@RequestBody RestaurantAdress adress) {
-		propRestServices.addAdress(adress);
+	@PostMapping("newadress/{email}")
+	public void addadress(@PathVariable String email,@RequestBody RestaurantAdress adress) {
+		propRestServices.addAdress(email,adress);
 	}
 
 }

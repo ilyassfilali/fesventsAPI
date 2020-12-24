@@ -29,25 +29,19 @@ public class DetailServiceImp  implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String email)  {
-		PasswordEncoder  passwd = new BCryptPasswordEncoder();
+		/*PasswordEncoder  passwd = new BCryptPasswordEncoder();
 		if(email.equals("invite")) {
 			return new org.springframework.security
 	                .core.userdetails.User(email,passwd.encode(""),true,
 	                		true, true,
 	                        true, getAuthorities("invit"));
-		}
+		}*/
 		Organisateur organisateur = getorganisateur(email);
 		if(organisateur != null) {
-			return new org.springframework.security
-	                .core.userdetails.User(organisateur.getEmail(),organisateur.getPasswd(),organisateur.isVerify(),
-	                		true, true,
-	                        true, getAuthorities("Org"));
+			return new org.springframework.security.core.userdetails.User(organisateur.getEmail(),organisateur.getPasswd(),organisateur.isVerify(),true, true,true, getAuthorities("Org"));
 		}
 		PropRestaurant prop = getPropRestaurant(email);
-		return new org.springframework.security
-                .core.userdetails.User(prop.getEmail(),prop.getPasswd(),prop.isVerify(),
-                		true, true,
-                        true, getAuthorities("Proprest"));
+		return new org.springframework.security.core.userdetails.User(prop.getEmail(),prop.getPasswd(),prop.isVerify(),true, true,true, getAuthorities("Proprest"));
 	}
 	
 	public PropRestaurant getPropRestaurant(String email) {

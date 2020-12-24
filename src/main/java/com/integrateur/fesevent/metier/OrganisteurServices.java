@@ -1,6 +1,10 @@
 package com.integrateur.fesevent.metier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.integrateur.fesevent.dao.EventRep;
@@ -18,11 +22,40 @@ public class OrganisteurServices {
 	@Autowired
 	private AuthService authService;
 	
-	public void addevent(Event event) {
-		Organisateur organisateur = authService.getCurrentorg();
+	public void addevent(String email, Event event) {
+		//Organisateur organisateur = authService.getCurrentorg();
+		Organisateur organisateur = organisateurRep.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User name not found"));
 		event.setOrganisateur(organisateur);
 		organisateur.getEvents().add(event);
 		organisateurRep.save(organisateur);
 	}
+	
+	public List<Event> geteventbyorg() {
+		/*Organisateur o = authService.getCurrentorg();
+		System.out.println(o.getEmail());
+		return eventRep.findByorganisateur(o);*/
+		List<Event> events = new ArrayList<Event>();
+		eventRep.findAll().forEach(events::add);
+		return events;
+	}
+
+	public List<Event> getevents() {
+		List<Event> events = new ArrayList<Event>();
+		eventRep.findAll().forEach(events::add);
+		return events;
+	}
+	
+	public List<Event> geteventbyorg(String id) {
+		Organisateur o = organisateurRep.findByEmail(id).orElseThrow(() -> new UsernameNotFoundException("User name not found"));
+		return eventRep.findByorganisateur(o);
+	}
+	
+	public void delevent(String email, Event e) {
+		Organisateur organisateur = organisateurRep.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User name not found"));
+		eventRep.delete(e);
+		organisateur.getEvents().remove(e);
+		organisateurRep.save(organisateur);
+	}
+	
 	
 }
