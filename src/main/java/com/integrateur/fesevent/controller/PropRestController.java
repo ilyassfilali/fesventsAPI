@@ -24,7 +24,8 @@ public class PropRestController {
 
 	
 	@GetMapping("restauinfo/{email}")
-	public ResponseEntity<Restaurant> getinfo(@PathVariable String email,@RequestBody PropRestaurant propRestaurant) {
+	public ResponseEntity<Restaurant> getinfo(@PathVariable String email) {
+		System.out.println(email);
 		return ResponseEntity.status(HttpStatus.OK).body(propRestServices.getRestaurant(email));
 	}
 	

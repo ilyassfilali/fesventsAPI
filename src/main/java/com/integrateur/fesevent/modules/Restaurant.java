@@ -24,6 +24,7 @@ public class Restaurant {
 	@OneToMany( mappedBy = "restaurant" , cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<RestaurantAdress> adress = new ArrayList<>();
 	private String email;
+	private String site;
 	private String imgPath;
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "restaurant")
 	private PropRestaurant propRestaurant;
@@ -90,6 +91,14 @@ public class Restaurant {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getSite() {
+		return site;
+	}
+
+	public void setSite(String site) {
+		this.site = site;
 	}
 
 	public String getImgPath() {
