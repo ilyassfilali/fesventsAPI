@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.integrateur.fesevent.metier.OrganisteurServices;
@@ -34,14 +35,14 @@ public class OrganisateurController {
 	
 	@PostMapping("addevent/{email}")
 	public void addevent(@PathVariable String email, @RequestBody Event event) {
-		System.out.println(email);
-		System.out.println(event.getAdress());
 		orgservice.addevent(email, event);
 	}
 	
-	@PostMapping("delevent/{email}")
-	public void delevent(@PathVariable String email,@RequestBody Event event) {
-		orgservice.delevent(email,event);
+	@PostMapping("delevents/")
+	public void delevent(@RequestBody Event event) {
+		System.out.println(event.getId());
+		orgservice.deltevent(event);
 	}
+	
  
 }

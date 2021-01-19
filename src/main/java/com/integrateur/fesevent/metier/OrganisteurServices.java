@@ -50,11 +50,9 @@ public class OrganisteurServices {
 		return eventRep.findByorganisateur(o);
 	}
 	
-	public void delevent(String email, Event e) {
-		Organisateur organisateur = organisateurRep.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User name not found"));
+	public void deltevent(Event e) {
+		System.out.println(e.getId());
 		eventRep.delete(e);
-		organisateur.getEvents().remove(e);
-		organisateurRep.save(organisateur);
 	}
 	
 	
