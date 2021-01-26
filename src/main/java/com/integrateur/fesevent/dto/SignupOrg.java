@@ -1,14 +1,13 @@
 package com.integrateur.fesevent.dto;
 
-public class SignupReq {
+public class SignupOrg {
 
 	private String nom;
 	private String prenom;
 	private String email;
 	private String passwd;
-	private String nomres;
-	public SignupReq() {
-		
+	public SignupOrg() {
+		// TODO Auto-generated constructor stub
 	}
 	public String getNom() {
 		return nom;
@@ -33,12 +32,6 @@ public class SignupReq {
 	}
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
-	}
-	public String getNomres() {
-		return nomres;
-	}
-	public void setNomres(String nomres) {
-		this.nomres = nomres;
 	}
 
 }
