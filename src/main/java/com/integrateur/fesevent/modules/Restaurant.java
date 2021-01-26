@@ -37,6 +37,14 @@ public class Restaurant {
 		super();
 		this.nomRes=name;
 	}
+	
+	public Restaurant(String nomRes, String tel, String email) {
+		super();
+		this.nomRes = nomRes;
+		this.tel = tel;
+		this.email = email;
+	}
+	
 	public Restaurant(int id, String nomRes, String tel, List<RestaurantAdress> adress, String email) {
 		super();
 		this.id = id;
