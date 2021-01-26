@@ -9,11 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.integrateur.fesevent.dao.EventRep;
 import com.integrateur.fesevent.dao.OrganisateurRep;
+import com.integrateur.fesevent.dto.EventDTO;
 import com.integrateur.fesevent.modules.Event;
 import com.integrateur.fesevent.modules.Organisateur;
 
 @Service
-public class OrganisteurServices {
+public class OrganisateurServices {
 
 	@Autowired
 	private OrganisateurRep organisateurRep;
@@ -22,9 +23,10 @@ public class OrganisteurServices {
 	@Autowired
 	private AuthService authService;
 	
-	public void addevent(String email, Event event) {
+	public void addevent(String email, EventDTO e) {
 		//Organisateur organisateur = authService.getCurrentorg();
 		Organisateur organisateur = organisateurRep.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User name not found"));
+		Event event = Mapping.mapEvent(e);
 		event.setOrganisateur(organisateur);
 		organisateur.getEvents().add(event);
 		organisateurRep.save(organisateur);
@@ -50,9 +52,9 @@ public class OrganisteurServices {
 		return eventRep.findByorganisateur(o);
 	}
 	
-	public void deltevent(Event e) {
-		System.out.println(e.getId());
-		eventRep.delete(e);
+	public void deltevent(EventDTO e) {
+		Event event = eventRep.findById(e.getId()).orElseThrow(() -> new UsernameNotFoundException("User name not found"));
+		eventRep.delete(event);
 	}
 	
 	

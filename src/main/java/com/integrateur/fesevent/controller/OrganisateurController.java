@@ -1,19 +1,18 @@
 package com.integrateur.fesevent.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.integrateur.fesevent.metier.OrganisteurServices;
+import com.integrateur.fesevent.dto.EventDTO;
+import com.integrateur.fesevent.metier.OrganisateurServices;
 import com.integrateur.fesevent.modules.Event;
 
 @RestController
@@ -21,7 +20,7 @@ import com.integrateur.fesevent.modules.Event;
 public class OrganisateurController {
 
 	@Autowired
-	private OrganisteurServices orgservice;
+	private OrganisateurServices orgservice;
 	
 	@GetMapping("events/")
 	public List<Event> getallevent() {
@@ -34,13 +33,12 @@ public class OrganisateurController {
 	}
 	
 	@PostMapping("addevent/{email}")
-	public void addevent(@PathVariable String email, @RequestBody Event event) {
+	public void addevent(@PathVariable String email, @RequestBody EventDTO event) {
 		orgservice.addevent(email, event);
 	}
 	
-	@PostMapping("delevents/")
-	public void delevent(@RequestBody Event event) {
-		System.out.println(event.getId());
+	@DeleteMapping("delevents/")
+	public void delevent(@RequestBody EventDTO event) {
 		orgservice.deltevent(event);
 	}
 	
