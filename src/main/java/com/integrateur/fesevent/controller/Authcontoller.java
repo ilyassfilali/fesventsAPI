@@ -3,7 +3,6 @@ package com.integrateur.fesevent.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.integrateur.fesevent.dto.AuthResponseToken;
 import com.integrateur.fesevent.dto.LoginRequest;
 import com.integrateur.fesevent.dto.RefreshTokenReq;
-import com.integrateur.fesevent.dto.SignupReq;
+import com.integrateur.fesevent.dto.SignupOrg;
+import com.integrateur.fesevent.dto.SignupPro;
 import com.integrateur.fesevent.metier.AuthService;
 import com.integrateur.fesevent.metier.RefreshtokenServices;
-import com.integrateur.fesevent.modules.Organisateur;
-import com.integrateur.fesevent.modules.PropRestaurant;
 
 @RestController
 @RequestMapping(value = "/api/auth/")
@@ -34,13 +32,13 @@ public class Authcontoller {
 	}
 
 	@PostMapping("/signupRes")
-	public ResponseEntity<String> signupR(@RequestBody SignupReq req){
+	public ResponseEntity<String> signupR(@RequestBody SignupPro req){
 		authService.ResSignup(req);
 		return new ResponseEntity<>("good",HttpStatus.OK);
 	}
 	
 	@PostMapping("/signupOrg")
-	public ResponseEntity<String> signupOrg(@RequestBody Organisateur organisateur){
+	public ResponseEntity<String> signupOrg(@RequestBody SignupOrg organisateur){//to change
 		authService.orgsignup(organisateur);
 		return new ResponseEntity<>("good",HttpStatus.OK);
 	}

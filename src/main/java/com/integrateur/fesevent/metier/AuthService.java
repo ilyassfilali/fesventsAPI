@@ -21,7 +21,8 @@ import com.integrateur.fesevent.dao.VerificationPropRep;
 import com.integrateur.fesevent.dto.AuthResponseToken;
 import com.integrateur.fesevent.dto.LoginRequest;
 import com.integrateur.fesevent.dto.RefreshTokenReq;
-import com.integrateur.fesevent.dto.SignupReq;
+import com.integrateur.fesevent.dto.SignupOrg;
+import com.integrateur.fesevent.dto.SignupPro;
 import com.integrateur.fesevent.modules.Notification;
 import com.integrateur.fesevent.modules.Organisateur;
 import com.integrateur.fesevent.modules.PropRestaurant;
@@ -55,7 +56,7 @@ public class AuthService {
 	//PropRestau signup
 	
 
-	public void ResSignup(SignupReq req) {
+	public void ResSignup(SignupPro req) {
 		PropRestaurant propRestaurant = new PropRestaurant();
 		propRestaurant.setEmail(req.getEmail());
 		propRestaurant.setName(req.getNom());
@@ -89,8 +90,9 @@ public class AuthService {
 	
 	//Organisateur signup
 	
-	public void orgsignup(Organisateur organisateur) {
-		String passwd = organisateur.getPasswd();
+	public void orgsignup(SignupOrg o) {
+		String passwd = o.getPasswd();
+		Organisateur organisateur = Mapping.mapOrg(o);
 		organisateur.setPasswd(passEncoder.encode(passwd));
 		organisateur.setVerify(false);
 		organisateurRep.save(organisateur);
