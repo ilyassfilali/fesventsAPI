@@ -51,7 +51,7 @@ public class PropRestServices {
 	}
 	
 	public void delet(AdressDTO address) {
-		RestaurantAdress a = adressRep.findById(address.getId()).orElseThrow(() -> new UsernameNotFoundException("adress not found"));
+		RestaurantAdress a = adressRep.findByadress(address.getAdress()).orElseThrow(() -> new UsernameNotFoundException("adress not found"));
 		adressRep.delete(a);
 	}
 }
